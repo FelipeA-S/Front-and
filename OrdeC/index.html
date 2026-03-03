@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ordenação em C</title>
+<style>
+*{
+margin:0px;
+font-family: Sans-serif;
+}
+.conteiner{
+width: 80%;
+margin: 0px auto;
+}
+
+nav{
+background-color:#4099AA;
+border: 2px solid #000000;
+border-radius: 15px;
+margin: 20px;
+padding: 15px;
+h1{
+font-size:30px;
+text-align:center;
+padding-bottom:18px;
+}
+ul{
+display: flex;
+justify-content: space-around;
+list-style: none;
+}
+a{
+color:#000000;
+font-size: 20px;
+text-decoration:none;
+}
+a:hover{
+font-size:24px;
+font-weigth:bold;
+}}
+
+.conteudo{
+margin:14px 0px;
+h2{
+font-size:26px;
+padding-bottom:6px;
+}
+p{
+font-size:18px;
+text-indent:20px;
+text-align:justify;
+margin-right:50px;
+}}
+
+#perguntas h2 {
+font-size:30px;
+}
+
+.perguntas{
+display: flex;
+flex-direction:column;
+gap:10px;
+margin:14px 0px;
+background-color:#f1faff;
+border:2px dashed #353535;
+legend{
+font-size:20px;
+}
+label{
+font-size:18px;
+}}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+	<h1>Métodos de Ordenação em Linguagem C</h1>
+	<ul>
+	<li><a href="#intro">Introdução</a></li>
+	<li><a href="#selection">Selection Sort</a></li>
+	<li><a href="#bubble">Bubble Sort</a></li>
+	<li><a href="#insertion">Insertion Sort</a></li>
+	<li><a href="#merge">Merge Sort</a></li>
+	<li><a href="#quick">Quick Sort</a></li>
+	<li><a href="#perguntas">Questionário</a></li>
+	</ul>
+</nav>
+<div class="conteiner">
+
+<div id="intro" class="conteudo">
+	<h2>Introdução</h2>
+	<p> A ordenação de dados (ou métodos de ordenação) é fundamental na computação para garantir a eficiência na busca de informações. Imagine um sistema com um vetor desorganizado: o código precisaria percorrer todos os elementos para encontrar o que procura, gerando atrasos. Ao organizar os dados, a pesquisa torna-se muito mais rápida e otimizada.</p>
+</div>
+
+<div id="selection" class="conteudo">
+	<h2> Selection Sort</h2>
+	<p> Este método foca em encontrar o menor valor do conjunto e posicioná-lo no início (ou fim, dependendo da lógica).</p>
+	<p> Funcionamento: O algoritmo identifica o menor número do vetor e o move para a posição correta, repetindo o processo para o segundo menor, e assim sucessivamente até que todo o vetor esteja ordenado.</p>
+</div>
+
+<div id="bubble" class="conteudo">
+	<h2> Bubble Sort</h2>
+	<p> Um dos métodos mais conhecidos por sua simplicidade de lógica.</p>
+	<p> Funcionamento: Compara um número com o seu sucessor e realiza a troca caso o primeiro seja maior. Esse processo se repete, fazendo com que os maiores valores "flutuem" para o final do vetor (como bolhas), até que reste apenas o primeiro valor a ser comparado.</p>
+</div>
+
+<div id="insertion" class="conteudo">
+	<h2> Insertion Sort</h2>
+	<p> Baseia-se na forma como muitas pessoas organizam cartas de um baralho.</p>
+	<p> Funcionamento: O algoritmo percorre o array capturando valor por valor e os insere na posição correta em relação aos elementos anteriores. À medida que executa, os números maiores deslocam-se para a direita e os menores para a esquerda.</p>
+</div>
+
+<div id="merge" class="conteudo">
+	<h2> Merge Sort</h2>
+	<p> Considerado um algoritmo do tipo "divisão e conquista".</p>
+	<p> Funcionamento: Ele quebra o array recursivamente em partes menores até que reste apenas um elemento. Depois, utiliza a rotina "Merge" para combinar esses fragmentos de volta, mas já de forma organizada, até recompor o vetor inteiro.</p>
+</div>
+
+<div id="quick" class="conteudo">
+	<h2> Quick Sort</h2>
+	<p> Também utiliza a estratégia de divisão, mas foca em um elemento chamado pivô.</p>
+	<p> Funcionamento: Seleciona um pivô e coloca todos os valores menores que ele de um lado e os maiores do outro. O processo se repete recursivamente para as subpartes criadas, garantindo que cada elemento encontre seu lugar exato no vetor.</p>
+</div>
+
+<form id="perguntas">
+	<h2>Bora responder umas perguntinhas:</h2>
+
+	<fieldset class="perguntas">
+	<legend> 1. Qual é a principal motivação para o uso de métodos de ordenação em sistemas computacionais?</legend>
+	<label><input type="radio" name="um"> a) Reduzir o espaço de memória ocupado pelos arquivos.</label>
+	<label><input type="radio" name="um"> b) Facilitar a escrita de códigos em linguagens como C e Assembly.</label>
+	<label><input type="radio" name="um"> c) Tornar as buscas de dados dentro de um sistema mais rápidas e eficientes.</label>
+	<label><input type="radio" name="um"> d) Impedir que o processador execute loops desnecessários.</label>
+	</fieldset>
+
+	<fieldset class="perguntas">
+	<legend>2. No algoritmo Selection Sort, qual é a estratégia principal de organização?</legend>
+	<label><input type="radio" name="dois"> a) Comparar elementos vizinhos e trocá-los de lugar.</label>
+	<label><input type="radio" name="dois"> b) Descobrir o menor número e transferi-lo para a posição correta, repetindo o processo sucessivamente.</label>
+	<label><input type="radio" name="dois"> c) Dividir o vetor ao meio até que sobre apenas um elemento.</label>
+	<label><input type="radio" name="dois"> d) Escolher um pivô e separar números maiores de um lado e menores de outro.</label>
+	</fieldset>
+
+	<fieldset class="perguntas">
+	<legend>3. Qual método utiliza a analogia de organizar cartas de um baralho, inserindo cada valor antes de um número maior?</legend>
+	<label><input type="radio" name="tres"> a) Bubble Sort</label>
+	<label><input type="radio" name="tres"> b) Quick Sort</label>
+	<label><input type="radio" name="tres"> c) Merge Sort</label>
+	<label><input type="radio" name="tres"> d) Insertion Sort.</label>
+	</fieldset>
+
+	<fieldset class="perguntas">
+	<legend>4. O Merge Sort é conhecido como um algoritmo de "divisão-e-conquista". Por que ele recebe esse nome?</legend>
+	<label><input type="radio" name="quatro"> a) Porque ele divide o vetor em partes menores recursivamente até que reste apenas um elemento para então ordená-los.</label>
+	<label><input type="radio" name="quatro"> b) Porque ele conquista o usuário pela sua rapidez de execução em vetores pequenos.</label>
+	<label><input type="radio" name="quatro"> c) Porque ele divide o pivô em duas partes iguais.</label>
+	<label><input type="radio" name="quatro"> d) Porque ele utiliza duas variáveis (i e j) para conquistar o índice final do vetor.</label>
+	</fieldset>
+
+	<fieldset class="perguntas">
+	<legend>5. No método Quick Sort, como funciona a utilização do "pivô"?</legend>
+	<label><input type="radio" name="cinco"> a) O pivô é sempre o primeiro número do vetor.</label>
+	<label><input type="radio" name="cinco"> b) O pivô serve como base para colocar valores menores de um lado e maiores de outro, garantindo sua posição correta.</label>
+	<label><input type="radio" name="cinco"> c) O pivô é uma variável temporária usada apenas para trocar dois valores de lugar.</label>
+	<label><input type="radio" name="cinco"> d) O pivô apaga os valores duplicados dentro do fragmento do vetor.</label>
+	</fieldset>
+</form>
+
+</div>
+</body>
+</html>
