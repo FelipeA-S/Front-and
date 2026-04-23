@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Copa do Mundo 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap');
+
+        :root {
+            --bg: #f4f1eb;
+            --nav-bg: #1a2e1a;
+            --nav-text: #e8dcc8;
+            --accent: #c8912a;
+            --accent2: #2a6e3f;
+            --text: #2c2c2c;
+            --muted: #7a7060;
+            --sec-a: #eef4ee;
+            --sec-b: #fdf6ec;
+            --sec-c: #eef2f8;
+            --border: rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 62px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        nav .nav-brand {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 1.2rem;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        nav ul li a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        nav ul li a:hover {
+            background: rgba(200, 145, 42, 0.18);
+            color: var(--accent);
+        }
+
+        header.hero {
+            text-align: center;
+            padding: 72px 24px 56px;
+            background: linear-gradient(160deg, #1a2e1a 0%, #2a4e2a 50%, #1a2e1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header.hero::before {
+            content: '⚽';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.04;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        header.hero .eyebrow {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 5px 18px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+        }
+
+        header.hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 6vw, 4.8rem);
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        header.hero h1 span {
+            color: var(--accent);
+        }
+
+        header.hero p {
+            margin-top: 16px;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        section {
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 36px 40px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.12);
+        }
+
+        section.sec-organizacao {
+            background-color: var(--sec-a);
+        }
+
+        section.sec-formato {
+            background-color: var(--sec-b);
+        }
+
+        section.sec-expectativas {
+            background-color: var(--sec-c);
+        }
+
+        .sec-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .sec-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent2);
+            text-align: left;
+        }
+
+        section p {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        section p strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .btn-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        #btn-tabela {
+            background-color: var(--accent2);
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        #btn-tabela:hover {
+            background: #1e5530;
+            transform: scale(1.04);
+        }
+
+        #btn-tabela:active {
+            transform: scale(0.97);
+        }
+
+        #tabela-jogos {
+            margin-top: 16px;
+            text-align: center;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        #tabela-jogos h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent2);
+            margin-bottom: 16px;
+        }
+
+        #tabela-jogos img {
+            max-width: 100%;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        #tabela-jogos p.img-fallback {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <span class="nav-brand">⚽ Copa 2026</span>
+        <ul>
+            <li><a href="#organizacao">Organização</a></li>
+            <li><a href="#formato">Formato</a></li>
+            <li><a href="#expectativas">Expectativas</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="eyebrow">FIFA World Cup</div>
+        <h1>Copa do Mundo <span>2026</span></h1>
+        <p>A maior edição da história do futebol, reunindo três países e 48 seleções de todo o mundo.</p>
+    </header>
+
+    <main>
+
+        <section class="sec-organizacao" id="organizacao">
+            <div class="sec-header">
+                <span class="sec-icon">🌍</span>
+                <h2>Organização e Sedes</h2>
+            </div>
+            <p>
+                A <strong>Copa do Mundo FIFA de 2026</strong> será a primeira edição realizada em
+                <strong>três países</strong>: Estados Unidos, Canadá e México. Essa será também a maior
+                Copa da história em número de cidades-sede, com partidas distribuídas por diversas regiões
+                da América do Norte, ampliando o alcance global do torneio.
+            </p>
+            <p style="margin-top:12px;">
+                <a href="#formato" style="color:var(--accent2);font-weight:700;text-decoration:none;">
+                    Saiba mais sobre o novo formato →
+                </a>
+            </p>
+        </section>
+
+        <section class="sec-formato" id="formato">
+            <div class="sec-header">
+                <span class="sec-icon">⚽</span>
+                <h2>Novo Formato</h2>
+            </div>
+            <p>
+                O torneio contará com <strong>48 seleções</strong>, em vez das tradicionais 32. As equipes
+                serão divididas em grupos, aumentando o número total de jogos e dando mais oportunidades
+                para países de diferentes continentes participarem. Essa mudança foi promovida pela
+                <strong>FIFA</strong> para tornar a competição mais inclusiva e competitiva.
+            </p>
+            <p style="margin-top:12px;">
+                <a href="#expectativas" style="color:var(--accent);font-weight:700;text-decoration:none;">
+                    Ver expectativas e impacto →
+                </a>
+            </p>
+        </section>
+
+        <section class="sec-expectativas" id="expectativas">
+            <div class="sec-header">
+                <span class="sec-icon">🏆</span>
+                <h2>Expectativas e Impacto</h2>
+            </div>
+            <p>
+                A edição de 2026 promete ser uma das <strong>mais assistidas da história</strong>, com
+                grande impacto econômico e cultural nos países-sede. Além disso, seleções tradicionais e
+                emergentes devem protagonizar jogos de alto nível, aumentando ainda mais o interesse global
+                pelo futebol e fortalecendo o esporte em novas regiões.
+            </p>
+            <p style="margin-top:12px;">
+                <a href="#organizacao" style="color:var(--accent2);font-weight:700;text-decoration:none;">
+                    ← Voltar ao início
+                </a>
+            </p>
+        </section>
+
+        <div class="btn-wrap">
+            <button id="btn-tabela" onclick="mostrarTabela()">
+                📋 Mostrar Tabela de Jogos
+            </button>
+        </div>
+
+        <div id="tabela-jogos"></div>
+
+    </main>
+
+    <script>
+        let tabelaVisivel = false;
+
+        function mostrarTabela() {
+            const container = document.getElementById('tabela-jogos');
+            const btn = document.getElementById('btn-tabela');
+
+            if (tabelaVisivel) {
+                container.innerHTML = '';
+                btn.textContent = '📋 Mostrar Tabela de Jogos';
+                tabelaVisivel = false;
+                return;
+            }
+
+            container.innerHTML = `
+        <h3>Tabela de Jogos — Copa do Mundo 2026</h3>
+        <img src="img/tabela_jogos.png" alt="Tabela de Jogos da Copa do Mundo 2026" onerror="this.style.display='none'; document.getElementById('img-aviso').style.display='block';"/>
+        <p class="img-fallback" id="img-aviso" style="display:none;">
+          ⚠️ Imagem não encontrada. Verifique se o arquivo <strong>tabela_jogos.png</strong>
+          está na mesma pasta que este HTML (pasta <em>Prova</em> na área de trabalho).
+        </p>
+      `;
+
+            btn.textContent = '✖ Ocultar Tabela';
+            tabelaVisivel = true;
+
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+
+</body>
+
+</html>

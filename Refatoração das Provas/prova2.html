@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Copa do Mundo — Grupos & Fatos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap');
+
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --card: #1e2530;
+            --accent: #f5a623;
+            --accent2: #2ea8ff;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --border: rgba(255, 255, 255, 0.07);
+            --radius: 14px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(245, 166, 35, 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 90%, rgba(46, 168, 255, 0.07) 0%, transparent 55%);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 56px 24px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .badge {
+            background: var(--accent);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 99px;
+            margin-bottom: 18px;
+        }
+
+        header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            letter-spacing: 0.04em;
+            line-height: 1;
+            color: #fff;
+        }
+
+        header h1 span {
+            color: var(--accent);
+        }
+
+        header p {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 480px;
+            line-height: 1.6;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 48px 24px 0;
+        }
+
+        .section-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .groups-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 26px 22px;
+            flex: 1 1 300px;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+
+        .group-emoji {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0;
+        }
+
+        .card ul li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.97rem;
+            color: var(--text);
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .card ul li::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        details {
+            background: rgba(245, 166, 35, 0.06);
+            border: 1px solid rgba(245, 166, 35, 0.25);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        details summary {
+            cursor: pointer;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+            user-select: none;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details summary::before {
+            content: '▶';
+            font-size: 0.65rem;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        details p {
+            padding: 0 14px 14px;
+            font-size: 0.87rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .btn-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 56px;
+        }
+
+        #btn-proximo {
+            background: var(--accent);
+            color: #000;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 0.12em;
+            padding: 14px 48px;
+            border: none;
+            border-radius: 99px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        #btn-proximo:hover {
+            background: #ffc04d;
+            transform: scale(1.04);
+        }
+
+        #btn-proximo:active {
+            transform: scale(0.97);
+        }
+
+        #btn-proximo .arrow {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="badge">⚽ Copa do Mundo — Fase de Grupos</div>
+        <h1>Grupos &amp; <span>Fatos</span></h1>
+        <p>Conheça as seleções de cada grupo e os fatos históricos mais curiosos da competição.</p>
+    </header>
+
+    <main>
+        <p class="section-label" id="page-label">Grupos da Fase Inicial</p>
+
+        <div class="groups-grid" id="grupos-container">
+
+            <div class="card" id="grupo-a">
+                <div class="card-header">
+                    <h2>Grupo A</h2>
+                    <span class="group-emoji">🅰️</span>
+                </div>
+
+                <h3 style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">
+                    Seleções</h3>
+                <ul>
+                    <li>México</li>
+                    <li>África do Sul</li>
+                    <li>Coreia do Sul</li>
+                    <li>República Tcheca</li>
+                </ul>
+
+                <details>
+                    <summary>Saiba Mais</summary>
+                    <p>O jogo de abertura será México x África do Sul. Confrontos entre Coreia do Sul e seleções
+                        europeias já ocorreram em várias Copas, com histórico equilibrado.</p>
+                </details>
+            </div>
+
+            <div class="card" id="grupo-b">
+                <div class="card-header">
+                    <h2>Grupo B</h2>
+                    <span class="group-emoji">🅱️</span>
+                </div>
+
+                <h3 style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">
+                    Seleções</h3>
+                <ul>
+                    <li>Canadá</li>
+                    <li>Suíça</li>
+                    <li>Catar</li>
+                    <li>Vaga Europeia (Bósnia)</li>
+                </ul>
+
+                <details>
+                    <summary>Saiba Mais</summary>
+                    <p>O Canadá joga em casa, fator importante de desempenho. Catar e Suíça já se enfrentaram
+                        recentemente em amistosos internacionais.</p>
+                </details>
+            </div>
+
+            <div class="card" id="grupo-c">
+                <div class="card-header">
+                    <h2>Grupo C</h2>
+                    <span class="group-emoji">🅲</span>
+                </div>
+
+                <h3 style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">
+                    Seleções</h3>
+                <ul>
+                    <li>Brasil</li>
+                    <li>Marrocos</li>
+                    <li>Haiti</li>
+                    <li>Escócia</li>
+                </ul>
+
+                <details>
+                    <summary>Saiba Mais</summary>
+                    <p>Brasil, Marrocos e Escócia já dividiram grupo em 1998. Brasil nunca perdeu para a Escócia em
+                        Copas.</p>
+                </details>
+            </div>
+
+        </div>
+
+        <div class="btn-wrap">
+            <button id="btn-proximo" onclick="alternarGrupos()">
+                Próximo <span class="arrow">→</span>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        const paginas = [
+            {
+                label: 'Grupos da Fase Inicial',
+                grupos: [
+                    {
+                        id: 'grupo-a',
+                        titulo: 'Grupo A',
+                        emoji: '🅰️',
+                        selecoes: ['México', 'África do Sul', 'Coreia do Sul', 'República Tcheca'],
+                        fato: 'O jogo de abertura será México x África do Sul. Confrontos entre Coreia do Sul e seleções europeias já ocorreram em várias Copas, com histórico equilibrado.'
+                    },
+                    {
+                        id: 'grupo-b',
+                        titulo: 'Grupo B',
+                        emoji: '🅱️',
+                        selecoes: ['Canadá', 'Suíça', 'Catar', 'Vaga Europeia (Bósnia)'],
+                        fato: 'O Canadá joga em casa, fator importante de desempenho. Catar e Suíça já se enfrentaram recentemente em amistosos internacionais.'
+                    },
+                    {
+                        id: 'grupo-c',
+                        titulo: 'Grupo C',
+                        emoji: '🅲',
+                        selecoes: ['Brasil', 'Marrocos', 'Haiti', 'Escócia'],
+                        fato: 'Brasil, Marrocos e Escócia já dividiram grupo em 1998. Brasil nunca perdeu para a Escócia em Copas.'
+                    }
+                ]
+            },
+            {
+                label: 'Grupos da Segunda Fase',
+                grupos: [
+                    {
+                        id: 'grupo-d',
+                        titulo: 'Grupo D',
+                        emoji: '🅳',
+                        selecoes: ['Estados Unidos', 'Paraguai', 'Austrália', 'Turquia'],
+                        fato: 'Os EUA jogam em casa, vantagem histórica em Copas. Austrália enfrenta frequentemente seleções sul-americanas em torneios.'
+                    },
+                    {
+                        id: 'grupo-e',
+                        titulo: 'Grupo E',
+                        emoji: '🅴',
+                        selecoes: ['Alemanha', 'Equador', 'Costa do Marfim', 'Curaçao'],
+                        fato: 'Alemanha costuma dominar fases de grupos. Equador e Costa do Marfim têm estilos físicos semelhantes.'
+                    },
+                    {
+                        id: 'grupo-f',
+                        titulo: 'Grupo F',
+                        emoji: '🅵',
+                        selecoes: ['Holanda', 'Japão', 'Tunísia', 'Suécia'],
+                        fato: 'Brasil, Marrocos e Escócia já dividiram grupo em 1998. Brasil nunca perdeu para a Escócia em Copas.'
+                    }
+                ]
+            }
+        ];
+
+        let paginaAtual = 0;
+
+        function alternarGrupos() {
+            paginaAtual = (paginaAtual + 1) % paginas.length;
+            const { label, grupos } = paginas[paginaAtual];
+
+            document.getElementById('page-label').textContent = label;
+
+            const btn = document.getElementById('btn-proximo');
+            btn.innerHTML = paginaAtual === 0
+                ? 'Próximo <span class="arrow">→</span>'
+                : 'Voltar <span class="arrow">←</span>';
+
+            const container = document.getElementById('grupos-container');
+            container.innerHTML = '';
+
+            grupos.forEach(g => {
+                const liItems = g.selecoes.map(s => `<li>${s}</li>`).join('');
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = g.id;
+                card.innerHTML = `
+          <div class="card-header">
+            <h2>${g.titulo}</h2>
+            <span class="group-emoji">${g.emoji}</span>
+          </div>
+          <h3 style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Seleções</h3>
+          <ul>${liItems}</ul>
+          <details>
+            <summary>Saiba Mais</summary>
+            <p>${g.fato}</p>
+          </details>
+        `;
+
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+
+</html>
