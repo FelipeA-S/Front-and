@@ -1,17 +1,278 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>União da Atividades</title>
-<style>
-</style>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>União das Atividades</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --accent: #d4f000;
+      --accent-dim: #8fa300;
+      --text: #f0f0f0;
+      --muted: #555;
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 3rem 2rem 5rem;
+      overflow-x: hidden;
+    }
+
+    /* Grid noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, #ffffff04 39px, #ffffff04 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, #ffffff04 39px, #ffffff04 40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.03em;
+    }
+
+    /* Section divider */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 4rem;
+    }
+
+    .card {
+      background: var(--surface);
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.15s; }
+    .card:nth-child(3) { animation-delay: 0.2s; }
+    .card:nth-child(4) { animation-delay: 0.25s; }
+    .card:nth-child(5) { animation-delay: 0.3s; }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card:hover { background: #161616; }
+    .card:hover::after { opacity: 0.03; }
+
+    .card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.2;
+      transition: color 0.2s;
+    }
+
+    .card:hover .card-title { color: var(--accent); }
+
+    .card-arrow {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .card:hover .card-arrow {
+      color: var(--accent);
+      gap: 0.7rem;
+    }
+
+    /* Full width card */
+    .card.full {
+      grid-column: 1 / -1;
+    }
+
+    .card.full .card-title {
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    footer {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+  </style>
+</head>
 <body>
-<a href="https://felipea-s.github.io/Front-and/HobbyMonster/hobby.html">Atividade 1</a>
-<a href="https://felipea-s.github.io/Front-and/OrdeC/ordena.html">Atividade 2</a>
-<a href="https://felipea-s.github.io/Front-and/Atividade 3/atividade.html">Atividade 3</a>
-<a href="https://felipea-s.github.io/Front-and/Atividade 4/atividade 4.html">Atividade 4</a>
-<a href="https://felipea-s.github.io/Front-and/Atividade 5/index.html">Atividade 5</a>
+  <div class="wrapper">
+
+    <header>
+      <p class="label">Felipe A-S · Front-end</p>
+      <h1>Atividades<br /><em>& Exercícios</em></h1>
+      <p class="subtitle">// repositório de projetos e listas</p>
+    </header>
+
+    <p class="section-label">Atividades principais</p>
+    <div class="grid">
+      <a class="card" href="https://felipea-s.github.io/Front-and/HobbyMonster/hobby.html">
+        <span class="card-num">01</span>
+        <span class="card-title">Hobby Monster</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card" href="https://felipea-s.github.io/Front-and/OrdeC/ordena.html">
+        <span class="card-num">02</span>
+        <span class="card-title">OrdeC</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card" href="https://felipea-s.github.io/Front-and/Atividade 3/atividade.html">
+        <span class="card-num">03</span>
+        <span class="card-title">Atividade 3</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card" href="https://felipea-s.github.io/Front-and/Atividade 4/atividade 4.html">
+        <span class="card-num">04</span>
+        <span class="card-title">Atividade 4</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card full" href="https://felipea-s.github.io/Front-and/Atividade 5/index.html">
+        <span class="card-num">05</span>
+        <span class="card-title">Atividade 5</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+    </div>
+
+    <p class="section-label">Lista de exercícios</p>
+    <div class="grid">
+      <a class="card" href="https://felipea-s.github.io/Front-and/ListaExercicios/Atividade1/index.html">
+        <span class="card-num">L·01</span>
+        <span class="card-title">Exercício 1</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card" href="https://felipea-s.github.io/Front-and/ListaExercicios/Atividade2/index.html">
+        <span class="card-num">L·02</span>
+        <span class="card-title">Exercício 2</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card" href="https://felipea-s.github.io/Front-and/ListaExercicios/Atividade3/index.html">
+        <span class="card-num">L·03</span>
+        <span class="card-title">Exercício 3</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+      <a class="card" href="https://felipea-s.github.io/Front-and/ListaExercicios/Atividade4/index.html">
+        <span class="card-num">L·04</span>
+        <span class="card-title">Exercício 4</span>
+        <span class="card-arrow">ver projeto →</span>
+      </a>
+    </div>
+
+    <footer>© 2025 · felipea-s · github.io</footer>
+
+  </div>
 </body>
 </html>
 
