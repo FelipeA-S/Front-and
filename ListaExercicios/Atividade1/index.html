@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validação de CPF</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f7f6f3;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2ddd6;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1916;
+      letter-spacing: -0.02em;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      border: 1.5px solid #e2ddd6;
+      border-radius: 10px;
+      outline: none;
+      color: #1a1916;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus {
+      border-color: #93b4f7;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #2563eb;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .verde{
+      background: green;
+    }
+    .vermelho{
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>Validação de CPF</h1>
+    <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" />
+    <button id="btn-validar" class="" onclick="validar()">Validar CPF</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

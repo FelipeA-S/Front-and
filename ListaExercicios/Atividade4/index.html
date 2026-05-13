@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinity Bank — Simulador</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: #3b82f6;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .brand-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-name span {
+      color: #3b82f6;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+    }
+
+    .divider {
+      height: 1px;
+      background: #334155;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #64748b;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: 10px;
+      color: #f1f5f9;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input[type="number"] {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    select option {
+      background: #1e293b;
+    }
+
+    .parcelas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .parcela-btn {
+      padding: 0.6rem 0;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: 8px;
+      color: #94a3b8;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .parcela-btn:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .parcela-btn.ativo {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+
+    /* Input hidden que guarda o valor selecionado */
+    #parcelas {
+      display: none;
+    }
+
+    button#btn-calcular {
+      width: 100%;
+      padding: 0.8rem;
+      background: #3b82f6;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 0.25rem;
+    }
+
+    button#btn-calcular:hover {
+      background: #2563eb;
+    }
+
+    /* Resultado */
+    .resultado {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .resultado.show {
+      display: flex;
+    }
+
+    .resultado-titulo {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 0.25rem;
+    }
+
+    .resultado-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .resultado-row:last-child {
+      border-bottom: none;
+    }
+
+    .resultado-row span:first-child {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .resultado-row span:last-child {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #f1f5f9;
+    }
+
+    .resultado-row.destaque span:last-child {
+      color: #3b82f6;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <div class="brand">
+      <div class="brand-icon">∞</div>
+      <span class="brand-name">Infinity <span>Bank</span></span>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Simulador de Vendas</h2>
+
+    <div class="field">
+      <label for="bandeira">Bandeira do cartão</label>
+      <select id="bandeira">
+        <option value="">Selecione a bandeira</option>
+        <option value="visa">Visa — 2%</option>
+        <option value="master">Mastercard — 1,85%</option>
+        <option value="elo">Elo — 3%</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="valor">Valor da venda (R$)</label>
+      <input type="number" id="valor" placeholder="0,00" min="0" step="0.01" />
+    </div>
+
+    <div class="field">
+      <label>Número de parcelas</label>
+      <div class="parcelas-grid">
+        <button type="button" class="parcela-btn" data-parcela="1">1x</button>
+        <button type="button" class="parcela-btn" data-parcela="2">2x</button>
+        <button type="button" class="parcela-btn" data-parcela="3">3x</button>
+        <button type="button" class="parcela-btn" data-parcela="6">6x</button>
+        <button type="button" class="parcela-btn" data-parcela="9">9x</button>
+        <button type="button" class="parcela-btn" data-parcela="12">12x</button>
+        <button type="button" class="parcela-btn" data-parcela="18">18x</button>
+        <button type="button" class="parcela-btn" data-parcela="24">24x</button>
+      </div>
+      <input type="hidden" id="parcelas" value="" />
+    </div>
+
+    <button id="btn-calcular" onclick="calcularParcela()">Calcular</button>
+
+    <div class="resultado" id="resultado">
+      <p class="resultado-titulo">Resumo da transação</p>
+      <div class="resultado-row">
+        <span>Valor da venda</span>
+        <span id="res-venda"></span>
+      </div>
+      <div class="resultado-row">
+        <span>Taxa da bandeira</span>
+        <span id="res-taxa"></span>
+      </div>
+      <div class="resultado-row">
+        <span>Juros</span>
+        <span id="res-juros"></span>
+      </div>
+      <div class="resultado-row">
+        <span>Taxa mensal</span>
+        <span id="res-mensal"></span>
+      </div>
+      <div class="resultado-row destaque">
+        <span>Valor por parcela</span>
+        <span id="res-parcela"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

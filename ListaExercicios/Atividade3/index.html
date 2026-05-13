@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Média Escolar</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f7f6f3;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2ddd6;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1916;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e2ddd6;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #6b6760;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.65rem 0.875rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      border: 1.5px solid #e2ddd6;
+      border-radius: 10px;
+      outline: none;
+      color: #1a1916;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus {
+      border-color: #93b4f7;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .notas {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #2563eb;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 0.25rem;
+    }
+
+    button:hover { background: #1d4ed8; }
+
+    /* Resultado — oculto por padrão, JS adiciona a classe correta */
+    .resultado {
+      display: none;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      gap: 0.25rem;
+      flex-direction: column;
+    }
+
+    .resultado.show { display: flex; }
+
+    .resultado.aprovado {
+      background: #eff4ff;
+      border: 1px solid #93b4f7;
+      color: #1d4ed8;
+    }
+
+    .resultado.exame {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #15803d;
+    }
+
+    .resultado.reprovado {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+    }
+
+    .resultado-titulo {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .resultado-detalhe {
+      font-size: 0.83rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Média Escolar</h1>
+
+    <div class="field">
+      <label for="nome">Nome do aluno</label>
+      <input type="text" id="nome" placeholder="Ex: João Silva" />
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="notas">
+      <div class="field">
+        <label for="nota1">Nota 1</label>
+        <input type="number" id="nota1" placeholder="0.0" min="0" max="10" step="0.1" />
+      </div>
+      <div class="field">
+        <label for="nota2">Nota 2</label>
+        <input type="number" id="nota2" placeholder="0.0" min="0" max="10" step="0.1" />
+      </div>
+      <div class="field">
+        <label for="nota3">Nota 3</label>
+        <input type="number" id="nota3" placeholder="0.0" min="0" max="10" step="0.1" />
+      </div>
+    </div>
+
+    <button id="btn-calcular" onclick="calcularMedia()">Calcular Média</button>
+
+    <div class="resultado" id="resultado">
+      <span class="resultado-titulo" id="resultado-titulo"></span>
+      <span class="resultado-detalhe" id="resultado-detalhe"></span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
