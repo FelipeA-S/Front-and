@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinity Bank — Lista VIP</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    /* Header do card */
+    .card-header {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: #3b82f6;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      letter-spacing: -0.01em;
+    }
+
+    .header-text span {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .counter {
+      margin-left: auto;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      text-align: center;
+    }
+
+    .counter-num {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #3b82f6;
+      line-height: 1;
+    }
+
+    .counter-label {
+      font-size: 0.6rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    /* Input area */
+    .input-area {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 0.6rem 0.875rem;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: 9px;
+      color: #f1f5f9;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .input-area input::placeholder { color: #475569; }
+
+    .input-area input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    .btn-add {
+      padding: 0.6rem 1rem;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .btn-add:hover { background: #2563eb; }
+
+    /* Lista */
+    .guest-list {
+      list-style: none;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .guest-list::-webkit-scrollbar { width: 4px; }
+    .guest-list::-webkit-scrollbar-track { background: transparent; }
+    .guest-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .guest-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.75rem;
+      border-bottom: 1px solid #1e293b;
+      transition: background 0.15s;
+    }
+
+    .guest-list li:last-child { border-bottom: none; }
+    .guest-list li:hover { background: #243044; }
+
+    .guest-name {
+      flex: 1;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    /* Estado: concluído */
+    .guest-list li.concluido .guest-name {
+      text-decoration: line-through;
+      color: #475569;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .btn-action {
+      padding: 0.35rem 0.65rem;
+      border: 1px solid #334155;
+      border-radius: 7px;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-concluir { color: #22c55e; }
+    .btn-concluir:hover { background: #052e16; border-color: #22c55e; }
+
+    .btn-editar { color: #f59e0b; }
+    .btn-editar:hover { background: #1c0a00; border-color: #f59e0b; }
+
+    .btn-excluir { color: #f87171; }
+    .btn-excluir:hover { background: #1f0707; border-color: #f87171; }
+
+    /* Empty state */
+    .empty {
+      padding: 3rem 1.75rem;
+      text-align: center;
+      color: #475569;
+      font-size: 0.85rem;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .empty span {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="card-header">
+      <div class="brand-icon">∞</div>
+      <div class="header-text">
+        <h1>Lista de Convidados VIP</h1>
+        <span>Infinity Bank · Inauguração</span>
+      </div>
+      <div class="counter">
+        <strong class="counter-num" id="counter">0</strong>
+        <span class="counter-label">total</span>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="input-nome" placeholder="Nome do convidado..." maxlength="60" />
+      <button class="btn-add" id="btn-adicionar" onclick="addConvidado()">+ Adicionar</button>
+    </div>
+
+    <ul class="guest-list" id="guest-list">
+      <li class="empty" id="empty-state">
+        <span>☁️</span>
+      </li>
+    </ul>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

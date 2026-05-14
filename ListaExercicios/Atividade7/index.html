@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinity Bank — Card Guard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: #3b82f6;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .header-text span {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Input do cartão */
+    .field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #64748b;
+      margin-bottom: 0.4rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: 10px;
+      color: #f1f5f9;
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .input-wrapper input::placeholder { color: #334155; letter-spacing: 0.08em; }
+
+    .input-wrapper input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    .input-wrapper input.valido {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+    }
+
+    .input-wrapper input.invalido {
+      border-color: #f87171;
+      box-shadow: 0 0 0 3px rgba(248,113,113,0.12);
+    }
+
+    .btn-analisar {
+      width: 100%;
+      padding: 0.8rem;
+      background: #3b82f6;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-analisar:hover { background: #2563eb; }
+
+    /* Painel de resultado */
+    .painel {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid #334155;
+      padding-top: 1.25rem;
+    }
+
+    .painel.show { display: flex; }
+
+    .painel-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 0.875rem;
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .status-badge.valido {
+      background: #052e16;
+      border: 1px solid #166534;
+      color: #22c55e;
+    }
+
+    .status-badge.invalido {
+      background: #1f0707;
+      border: 1px solid #7f1d1d;
+      color: #f87171;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .valido .status-dot  { background: #22c55e; }
+    .invalido .status-dot { background: #f87171; }
+
+    /* Info rows */
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-row .info-chave {
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+
+    .info-row .info-valor {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="card-header">
+      <div class="brand-icon">🛡</div>
+      <div class="header-text">
+        <h1>Card Guard</h1>
+        <span>Infinity Bank · Validador de Segurança</span>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="field">
+        <label for="input-cartao">Número do cartão</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="input-cartao"
+            placeholder="0000 0000 0000 0000"
+            maxlength="19"
+          />
+        </div>
+      </div>
+
+      <button class="btn-analisar" id="btn-analisar">Analisar Cartão</button>
+
+      <!-- Painel de resultado -->
+      <div class="painel" id="painel">
+        <p class="painel-label">Painel de Informações · IIN/BIN</p>
+
+        <div class="status-badge" id="status-badge">
+          <span class="status-dot"></span>
+          <span id="status-texto"></span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-chave">Bandeira</span>
+          <span class="info-valor" id="info-bandeira">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-chave">Setor Industrial</span>
+          <span class="info-valor" id="info-setor">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-chave">Banco Emissor</span>
+          <span class="info-valor" id="info-banco">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-chave">IIN (8 dígitos)</span>
+          <span class="info-valor" id="info-iin">—</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

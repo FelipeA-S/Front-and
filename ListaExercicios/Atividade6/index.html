@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinity Bank — Crédito para Eventos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: #3b82f6;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      letter-spacing: -0.01em;
+    }
+
+    .header-text span {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #64748b;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: 10px;
+      color: #f1f5f9;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    select:focus, input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    select option { background: #1e293b; }
+
+    input[type="number"] {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+    }
+
+    .btn-calcular {
+      width: 100%;
+      padding: 0.8rem;
+      background: #3b82f6;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 0.25rem;
+    }
+
+    .btn-calcular:hover { background: #2563eb; }
+
+    /* Resultado */
+    .resultado {
+      display: none;
+      flex-direction: column;
+      border-top: 1px solid #334155;
+      padding-top: 1.25rem;
+      gap: 0;
+    }
+
+    .resultado.show { display: flex; }
+
+    .res-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 0.75rem;
+    }
+
+    .res-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .res-row:last-child { border-bottom: none; }
+
+    .res-row span:first-child {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .res-row span:last-child {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.875rem;
+      color: #e2e8f0;
+    }
+
+    .res-row.desconto span:last-child { color: #22c55e; }
+
+    .res-row.total {
+      margin-top: 0.25rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid #334155;
+      border-bottom: none;
+    }
+
+    .res-row.total span:first-child {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .res-row.total span:last-child {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #3b82f6;
+    }
+
+    /* Badge fidelidade */
+    .badge-fidelidade {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      background: #052e16;
+      border: 1px solid #166534;
+      border-radius: 8px;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.78rem;
+      color: #22c55e;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-fidelidade.show { display: flex; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="card-header">
+      <div class="brand-icon">∞</div>
+      <div class="header-text">
+        <h1>Crédito para Festas & Eventos</h1>
+        <span>Infinity Bank · Simulador de Orçamento</span>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="field">
+        <label for="pacote">Pacote</label>
+        <select id="pacote">
+          <option value="">Selecione um pacote</option>
+          <option value="50">Standard — R$ 50,00 / pessoa</option>
+          <option value="80">Premium — R$ 80,00 / pessoa</option>
+          <option value="120">Infinity Deluxe — R$ 120,00 / pessoa</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="pessoas">Quantidade de pessoas</label>
+        <input type="number" id="pessoas" placeholder="Ex: 80" min="1" />
+      </div>
+
+      <button class="btn-calcular" id="btn-calcular" onclick="calcularOrcamento()">Calcular Orçamento</button>
+
+      <div class="resultado" id="resultado">
+        <p class="res-label">Resumo do Orçamento</p>
+
+        <div class="badge-fidelidade" id="badge-fidelidade">
+          🎉 Desconto fidelidade de 5% aplicado! (+100 convidados)
+        </div>
+
+        <div class="res-row">
+          <span>Custo bruto</span>
+          <span id="res-bruto"></span>
+        </div>
+        <div class="res-row">
+          <span>Taxa de serviço (10%)</span>
+          <span id="res-taxa"></span>
+        </div>
+        <div class="res-row desconto" id="row-desconto">
+          <span>Desconto fidelidade (5%)</span>
+          <span id="res-desconto"></span>
+        </div>
+        <div class="res-row total">
+          <span>Total final</span>
+          <span id="res-total"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
