@@ -1,0 +1,145 @@
+Criei um batalha naval com react no codepen ficando assim código final:
+A parte do HTML:
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batalha Naval</title>
+</head>
+<body>
+  <h1>🚢 Batalha Naval</h1>
+  <p>Tiros: <span id="tiros">0</span></p>
+  <p>Navios encontrados: <span id="acertos">0</span>/5</p>
+  <div id="tabuleiro"></div>
+  <button onclick="iniciarJogo()">Novo Jogo</button>
+</body>
+</html>
+
+A parte do CSS:
+body {
+  margin: 0;
+  background: #0c2747;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+.container {
+  text-align: center;
+  padding: 20px;
+}
+.tabuleiro {
+  display: grid;
+  grid-template-columns: repeat(8, 50px);
+  gap: 5px;
+  justify-content: center;
+  margin: 20px auto;
+}
+.celula {
+  width: 50px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  background: #4aa3df;
+  font-size: 20px;
+  transition: 0.2s;
+}
+.celula:hover {
+  background: #66b8f0;
+}
+.acerto {
+  background: #2ecc71;
+}
+.erro {
+  background: #34495e;
+}
+.novoJogo {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.vitoria {
+  color: gold;
+}
+
+A parte do React:
+import React from "https://esm.sh/react";
+import ReactDOM from "https://esm.sh/react-dom";
+import { StrictMode } from "https://esm.sh/react";
+import { createRoot } from "https://esm.sh/react-dom/client";
+import { useState } from;
+
+const tamanho = 8;
+const quantidadeNavios = 5;
+let tabuleiro = [];
+let tiros = 0;
+let acertos = 0;
+
+function iniciarJogo(){
+    tiros = 0;
+    acertos = 0;
+    document.getElementById("tiros").textContent = tiros;
+    document.getElementById("acertos").textContent = acertos;
+    tabuleiro = [];
+    for(let i=0;i<tamanho;i++){
+        tabuleiro[i] = [];
+        for(let j=0;j<tamanho;j++){
+            tabuleiro[i][j] = {
+                navio:false,
+                clicado:false
+            };
+        }
+    }
+    let colocados = 0;
+    while(colocados < quantidadeNavios){
+        let linha = Math.floor(Math.random()*tamanho);
+        let coluna = Math.floor(Math.random()*tamanho);
+        if(!tabuleiro[linha][coluna].navio){
+            tabuleiro[linha][coluna].navio = true;
+            colocados++;
+        }
+    }
+    desenharTabuleiro();
+}
+
+function desenharTabuleiro(){
+    const area = document.getElementById("tabuleiro");
+    area.innerHTML = "";
+    for(let i=0;i<tamanho;i++){
+        for(let j=0;j<tamanho;j++){
+            const btn = document.createElement("button");
+            btn.className = "celula";
+            if(tabuleiro[i][j].clicado){
+                if(tabuleiro[i][j].navio){
+                    btn.classList.add("acerto");
+                    btn.textContent = "🚢";
+                }else{
+                    btn.classList.add("erro");
+                    btn.textContent = "💦";
+                }
+            }
+            btn.onclick = () => atacar(i,j);
+            area.appendChild(btn);
+        }
+    }
+}
+
+function atacar(i,j){
+    if(tabuleiro[i][j].clicado){
+        return;
+    }
+    tabuleiro[i][j].clicado = true;
+    tiros++;
+    if(tabuleiro[i][j].navio){
+        acertos++;
+    }
+    document.getElementById("tiros").textContent = tiros;
+    document.getElementById("acertos").textContent = acertos;
+    desenharTabuleiro();
+    if(acertos === quantidadeNavios){
+        setTimeout(() => {
+            alert("🎉 Você venceu!");
+        },100);
+    }
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
